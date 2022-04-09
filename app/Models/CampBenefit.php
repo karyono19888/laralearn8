@@ -9,5 +9,5 @@ class CampBenefit extends Model
 {
     use HasFactory;
 
-    protected $fillabel = ['name'];
+    protected $fillabel = ['camp_id', 'name'];
 }
