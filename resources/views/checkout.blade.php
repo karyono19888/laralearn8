@@ -1,6 +1,6 @@
-@extends('layouts.app');
+@extends('layouts.app')
 
-@section('content');
+@section('content')
 <section class="checkout">
 	<div class="container">
 			<div class="row text-center pb-70">
