@@ -29,32 +29,33 @@
 									</div>
 									<div class="col-lg-1 col-12"></div>
 									<div class="col-lg-6 col-12">
-											<form action="{{ route('checkout.success') }}" class="basic-form">
+											<form action="{{ route('checkout.store', $camp->id) }}" class="basic-form" method="POST">
+												@csrf
 													<div class="mb-4">
-															<label for="exampleInputEmail1" class="form-label">Full Name</label>
-															<input type="text" class="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp">
+															<label class="form-label">Full Name</label>
+															<input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}"/>
 													</div>
 													<div class="mb-4">
-															<label for="exampleInputEmail1" class="form-label">Email Address</label>
-															<input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+															<label class="form-label">Email Address</label>
+															<input type="email" class="form-control" name="email" value="{{ Auth::user()->email }}"/>
 													</div>
 													<div class="mb-4">
-															<label for="exampleInputEmail1" class="form-label">Occupation</label>
-															<input type="text" class="form-control" name="accupation" id="exampleInputEmail1" aria-describedby="emailHelp">
+															<label class="form-label">Occupation</label>
+															<input type="text" class="form-control" name="occupation" value="{{ Auth::user()->occupation }}"/>
 													</div>
 													<div class="mb-4">
-															<label for="exampleInputEmail1" class="form-label">Card Number</label>
-															<input type="number" class="form-control" name="card_number" id="exampleInputEmail1" aria-describedby="emailHelp">
+															<label class="form-label">Card Number</label>
+															<input type="number" class="form-control" name="card_number"/>
 													</div>
 													<div class="mb-5">
 															<div class="row">
 																	<div class="col-lg-6 col-12">
-																			<label for="exampleInputEmail1" class="form-label">Expired</label>
-																			<input type="text" class="form-control" name="expired" id="exampleInputEmail1" aria-describedby="emailHelp">
+																			<label class="form-label">Expired</label>
+																			<input type="month" class="form-control" name="expired"/>
 																	</div>
 																	<div class="col-lg-6 col-12">
-																			<label for="exampleInputEmail1" class="form-label">CVC</label>
-																			<input type="text" class="form-control" name="cvc" id="exampleInputEmail1" aria-describedby="emailHelp">
+																			<label class="form-label">CVC</label>
+																			<input type="number" class="form-control" name="cvc"/>
 																	</div>
 															</div>
 													</div>
