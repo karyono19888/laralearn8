@@ -33,19 +33,31 @@
 												@csrf
 													<div class="mb-4">
 															<label class="form-label">Full Name</label>
-															<input type="text" class="form-control" name="name" value="{{ Auth::user()->name }}"/>
+															<input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" name="name" value="{{ Auth::user()->name }}"/>
+														@if ($errors->has('name'))
+															<p class="text-danger">{{ $errors->first('name') }}</p>
+														@endif
 													</div>
 													<div class="mb-4">
 															<label class="form-label">Email Address</label>
-															<input type="email" class="form-control" name="email" value="{{ Auth::user()->email }}"/>
+															<input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" value="{{ Auth::user()->email }}"/>
+															@if ($errors->has('email'))
+															<p class="text-danger">{{ $errors->first('email') }}</p>
+														@endif
 													</div>
 													<div class="mb-4">
 															<label class="form-label">Occupation</label>
-															<input type="text" class="form-control" name="occupation" value="{{ Auth::user()->occupation }}"/>
+															<input type="text" class="form-control {{ $errors->has('occupation') ? 'is-invalid' : '' }}" name="occupation" value="{{ old('occupation') ?: Auth::user()->occupation }}"/>
+															@if ($errors->has('occupation'))
+															<p class="text-danger">{{ $errors->first('occupation') }}</p>
+														@endif
 													</div>
 													<div class="mb-4">
 															<label class="form-label">Card Number</label>
-															<input type="number" class="form-control" name="card_number"/>
+															<input type="number" class="form-control {{ $errors->has('card_number') ? 'is-invalid' : '' }}" name="card_number" value="{{ old('card_number') ?: '' }}"/>
+															@if ($errors->has('card_number'))
+															<p class="text-danger">{{ $errors->first('card_number') }}</p>
+														@endif
 													</div>
 													<div class="mb-5">
 															<div class="row">
