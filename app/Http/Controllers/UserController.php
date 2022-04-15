@@ -6,7 +6,7 @@ use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\Request;
 use Auth;
-use Illuminate\Support\Facades\Mail;
+use Mail;
 use App\Mail\User\AfterRegister;
 
 class UserController extends Controller
@@ -33,7 +33,12 @@ class UserController extends Controller
         ];
 
         // return $data;
-        $user = User::firstOrCreate(['email' => $data['email']], $data);
+        // $user = User::firstOrCreate(['email' => $data['email']], $data);
+        $user = User::whereEmail($data['email'])->first();
+        if (!$user) {
+            $user = User::create($data);
+            Mail::to($user->email)->send(new AfterRegister($user));
+        }
 
         Auth::login($user, true);
 
