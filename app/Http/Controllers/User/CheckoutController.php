@@ -67,6 +67,8 @@ class CheckoutController extends Controller
         $user->email        = $data['email'];
         $user->name         = $data['name'];
         $user->occupation   = $data['occupation'];
+        $user->phone        = $data['phone'];
+        $user->address      = $data['address'];
         $user->save();
 
         // create checkout
@@ -144,21 +146,21 @@ class CheckoutController extends Controller
             'name'      => "Payment for {$checkout->Camp->title} Camp"
         ];
 
-        $discountPrice = 0;
-        if ($checkout->Discount) {
-            $discountPrice  = $price * $checkout->discount_percentage / 100;
-            $item_details[] = [
-                'id'        => $checkout->Discount->code,
-                'price'     => -$discountPrice,
-                'quantity'  => 1,
-                'name'      => "Discount {$checkout->Discount->name} ({$checkout->discount_percentage}%)"
-            ];
-        }
+        // $discountPrice = 0;
+        // if ($checkout->Discount) {
+        //     $discountPrice  = $price * $checkout->discount_percentage / 100;
+        //     $item_details[] = [
+        //         'id'        => $checkout->Discount->code,
+        //         'price'     => -$discountPrice,
+        //         'quantity'  => 1,
+        //         'name'      => "Discount {$checkout->Discount->name} ({$checkout->discount_percentage}%)"
+        //     ];
+        // }
 
-        $total = $price - $discountPrice;
+        // $total = $price - $discountPrice;
         $transaction_details = [
             'order_id'      => $orderId,
-            'gross_amount'  => $total
+            // 'gross_amount'  => $total
         ];
 
         $userData = [
@@ -190,7 +192,7 @@ class CheckoutController extends Controller
             // Get Snap Payment Page URL
             $paymentUrl             = \Midtrans\Snap::createTransaction($midtrans_params)->redirect_url;
             $checkout->midtrans_url = $paymentUrl;
-            $checkout->total        = $total;
+            // $checkout->total        = $total;
             $checkout->save();
 
             return $paymentUrl;
@@ -204,10 +206,10 @@ class CheckoutController extends Controller
         $notif = $request->method() == 'POST' ? new Midtrans\Notification() : Midtrans\Transaction::status($request->order_id);
 
         $transaction_status = $notif->transaction_status;
-        $fraud = $notif->fraud_status;
+        $fraud              = $notif->fraud_status;
 
-        $checkout_id = explode('-', $notif->order_id)[0];
-        $checkout = Checkout::find($checkout_id);
+        $checkout_id    = explode('-', $notif->order_id)[0];
+        $checkout       = Checkout::find($checkout_id);
 
         if ($transaction_status == 'capture') {
             if ($fraud == 'challenge') {

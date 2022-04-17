@@ -15,7 +15,7 @@ class Checkout extends Model
         'user_id',
         'camp_id',
         'payment_status',
-        'midtrans_code',
+        'midtrans_url',
         'midtrans_booking_code'
     ];
 
