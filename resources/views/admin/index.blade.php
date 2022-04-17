@@ -48,7 +48,10 @@
 											</td>
 											<td>{{ $checkout->User->name }}</td>
 											<td>
-													<strong>${{ $checkout->Camp->price }}k</strong>
+													<strong>Rp. {{ number_format($checkout->total,0,',','.') }}</strong>
+													@if ($checkout->discount_id)
+															<span class="badge bg-primary">Disc {{ $checkout->discount_percentage }}%</span>
+													@endif
 											</td>
 											<td>
 												@if ($checkout->payment_status == 'paid')

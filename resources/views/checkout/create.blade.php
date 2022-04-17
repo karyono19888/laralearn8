@@ -58,14 +58,21 @@
 														@if ($errors->has('phone'))
 																<p class="text-danger">{{$errors->first('phone')}}</p>
 														@endif
-												</div>
-												<div class="mb-4">
-														<label class="form-label">Address</label>
-														<input name="address" type="text" class="form-control {{$errors->has('address') ? 'is-invalid' : ''}}" value="{{old('address') ?: Auth::user()->address}}" required />
-														@if ($errors->has('address'))
-																<p class="text-danger">{{$errors->first('address')}}</p>
+													</div>
+													<div class="mb-4">
+															<label class="form-label">Address</label>
+															<input name="address" type="text" class="form-control {{$errors->has('address') ? 'is-invalid' : ''}}" value="{{old('address') ?: Auth::user()->address}}" required />
+															@if ($errors->has('address'))
+																	<p class="text-danger">{{$errors->first('address')}}</p>
+															@endif
+													</div>
+													<div class="mb-4">
+														<label class="form-label">Discount Code</label>
+														<input name="discount" type="text" class="form-control {{$errors->has('discount') ? 'is-invalid' : ''}}" value="{{old('discount')}}" />
+														@if ($errors->has('discount'))
+																<p class="text-danger">{{$errors->first('discount')}}</p>
 														@endif
-												</div>
+													</div>
 													<button type="submit" class="w-100 btn btn-primary">Pay Now</button>
 													<p class="text-center subheader mt-4">
 															<img src="{{ asset('images/ic_secure.svg') }}" alt=""> Your payment is secure and encrypted.
