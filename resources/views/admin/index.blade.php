@@ -14,7 +14,7 @@
 			</div>
 			<div class="row my-5">
 				@include('components.alert')
-					<table class="table">
+					<table class="table table-responsive table-hover">
 						<thead>
 							<tr>
 								<th>Image Camps</th>
@@ -23,7 +23,6 @@
 								<th>Username</th>
 								<th>Price</th>
 								<th>Status Payment</th>
-								<th>Action</th>
 							</tr>
 						</thead>
 							<tbody>
@@ -41,10 +40,10 @@
 													</p>
 											</td>
 											<td>
-												@if (Auth::user()->avatar)
-												<img src="{{ Auth::user()->avatar }}" class="user-photo" alt="" style="border-radius: 50%">
-												@else
+												@if ($checkout->User->avatar =='')
 												<img src="https://ui-avatars.com/api/?name=Admin" class="user-photo" style="border-radius: 50%">
+												@else
+												<img src="{{ $checkout->User->avatar }}" class="user-photo" alt="" style="border-radius: 50%; background-color:darkgrey;" width="30%">
 												@endif
 											</td>
 											<td>{{ $checkout->User->name }}</td>
@@ -52,21 +51,13 @@
 													<strong>${{ $checkout->Camp->price }}k</strong>
 											</td>
 											<td>
-													@if ($checkout->is_paid)
-													<strong class="text-success">Payment Success</strong>
-													@else
-													<strong class="text-warning">Waiting for Payment</strong>
-													@endif
-											</td>
-											<td>
-													@if (!$checkout->is_paid)
-													<form action="{{ route('admin.checkout.update',$checkout->id) }}" method="post">
-															@csrf
-															<button class="btn btn-primary">Set to Paid</button>
-														</form>
-														@else
-														<button class="btn btn-thirdty disabled">Paid</button>
-													@endif
+												@if ($checkout->payment_status == 'paid')
+												<strong class="text-success">Payment Success</strong>
+												@elseif($checkout->payment_status == 'failed')
+												<strong class="text-danger">Payment Failed</strong>
+												@else
+												<strong class="text-warning">Waiting for Payment</strong>
+												@endif
 											</td>
 										</tr>
 									@empty
